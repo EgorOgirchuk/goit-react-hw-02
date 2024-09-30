@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Feedback from "./Feedback";
 import "./App.css";
 
@@ -36,6 +36,11 @@ const App = () => {
 
   return (
     <div>
+      <h1>Sip Happens Café</h1>
+      <p>
+        Please leave your feedback about our service by selecting one of the
+        options below.
+      </p>
       <button onClick={() => updateFeedback("good")}>Good</button>
       <button onClick={() => updateFeedback("neutral")}>Neutral</button>
       <button onClick={() => updateFeedback("bad")}>Bad</button>
