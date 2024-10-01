@@ -3,11 +3,13 @@ import Feedback from "./components/Feedback";
 import "./App.css";
 import Options from "./components/Options";
 import Description from "./components/Description";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [feedback, setFeedback] = useState(null);
 
   const [isFeedbackEmpty, setIsFeedbackEmpty] = useState(true);
+  const [totalPercent, setTotalPercent] = useState();
 
   const getIsFeedbackEmpty = (feedback) => {
     if (!feedback) {
@@ -44,11 +46,15 @@ const App = () => {
     }
     setIsFeedbackEmpty(getIsFeedbackEmpty(feedback));
     window.localStorage.setItem("feedback", JSON.stringify(feedback));
+
+    const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+
+    const totalPercent = Math.round((feedback.good / totalFeedback) * 100);
+    setTotalPercent(totalPercent);
   }, [feedback]);
 
   useEffect(() => {
     const feedbackString = window.localStorage.getItem("feedback");
-    console.log(feedbackString);
     if (!feedbackString) {
       setFeedback({
         good: 0,
@@ -71,9 +77,9 @@ const App = () => {
       />
       <div>
         {!isFeedbackEmpty ? (
-          <Feedback feedback={feedback} />
+          <Feedback feedback={feedback} totalPercent={totalPercent} />
         ) : (
-          "No feedback yet"
+          <Notification title="No feedback yet" />
         )}
       </div>
     </div>
