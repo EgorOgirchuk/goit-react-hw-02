@@ -67,7 +67,7 @@ const App = () => {
     setTotalPercent(totalPercent);
   }, [feedback]);
 
-  return feedback != null ? (
+  return (
     <div>
       <Description />
       <Options
@@ -83,8 +83,6 @@ const App = () => {
         )}
       </div>
     </div>
-  ) : (
-    ""
   );
 };
 export default App;
