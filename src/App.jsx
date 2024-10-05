@@ -3,7 +3,6 @@ import Feedback from "./components/Feedback";
 import "./App.css";
 import Options from "./components/Options";
 import Description from "./components/Description";
-import Notification from "./components/Notification";
 
 const App = () => {
   const initFeedback = () => {
@@ -20,19 +19,6 @@ const App = () => {
   };
 
   const [feedback, setFeedback] = useState(initFeedback);
-
-  const [isFeedbackEmpty, setIsFeedbackEmpty] = useState(true);
-
-  const [totalPercent, setTotalPercent] = useState();
-
-  const getIsFeedbackEmpty = (feedback) => {
-    if (!feedback) {
-      return true;
-    }
-    const { good, neutral, bad } = feedback;
-    const total = good + neutral + bad;
-    return total == 0;
-  };
 
   const updateFeedback = (feedbackType) => {
     if (feedbackType == "good") {
@@ -58,14 +44,16 @@ const App = () => {
     if (!feedback) {
       return;
     }
-    setIsFeedbackEmpty(getIsFeedbackEmpty(feedback));
+
     window.localStorage.setItem("feedback", JSON.stringify(feedback));
-
-    const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-
-    const totalPercent = Math.round((feedback.good / totalFeedback) * 100);
-    setTotalPercent(totalPercent);
   }, [feedback]);
+
+  const isFeedbackEmpty =
+    feedback.good === 0 && feedback.neutral === 0 && feedback.bad === 0;
+
+  const totalPercent = Math.round(
+    (feedback.good / (feedback.good + feedback.neutral + feedback.bad)) * 100
+  );
 
   return (
     <div>
@@ -79,7 +67,7 @@ const App = () => {
         {!isFeedbackEmpty ? (
           <Feedback feedback={feedback} totalPercent={totalPercent} />
         ) : (
-          <Notification title="No feedback yet" />
+          "No feedback yet"
         )}
       </div>
     </div>
