@@ -3,6 +3,7 @@ import Feedback from "./components/Feedback";
 import "./App.css";
 import Options from "./components/Options";
 import Description from "./components/Description";
+import Notification from "./components/Notification";
 
 const App = () => {
   const initFeedback = () => {
@@ -67,7 +68,7 @@ const App = () => {
         {!isFeedbackEmpty ? (
           <Feedback feedback={feedback} totalPercent={totalPercent} />
         ) : (
-          "No feedback yet"
+          <Notification />
         )}
       </div>
     </div>
